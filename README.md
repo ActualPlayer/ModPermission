@@ -11,9 +11,10 @@ Block the use of mods using permissions.
 
 ## Config
 
-* `blacklistItemPickup` - When a player does not have permission to a mod, also disable picking up of items on the floor. DEFAULT: `false`
-
 * `informationMessage` - What message to send to the user when he attempts to use a mod that he does not have permission to use. Leave this empty to disable messaging. %m is the mod id
+
 * `allowBreakingOfBlocks` - Allows breaking of blocks even with the permission to prevent griefing. DEFAULT: `true`
-* `allowItemsToDrop` - If allowBreakingOfBlocks is true, this setting will also drop the item to the ground instead of vanishing. The user will not be able to pick up the item if he has the modpermissions.blacklist.{mod id}.pickup permission".  DEFAULT: `false`
+
+* `allowItemsToDrop` - If allowBreakingOfBlocks is true, this setting will also drop the item to the ground instead of vanishing. The user will not be able to pick up the item if he has the modpermissions.blacklist.{mod id}.pickup permission".  DEFAULT: `true`
+
 * `allowItemMove` - Allows the moving of mod items between inventories. This value is ignored if the user attempts to move items from his own inventory to prevent items being stuck. DEFAULT: `true`
