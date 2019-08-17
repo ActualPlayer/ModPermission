@@ -157,33 +157,29 @@ public class ModPermissions {
 
     @Listener
     public void onPreItemPickup(ChangeInventoryEvent.Pickup.Pre event) {
-        if (configuration.isBlacklistItemPickup()) {
-            try {
-                Player player = ((Player) event.getCause().all().get(0));
-                String itemId = event.getFinal().get(0).getType().getId();
+        try {
+            Player player = ((Player) event.getCause().all().get(0));
+            String itemId = event.getFinal().get(0).getType().getId();
 
-                if (!hasPermission(player, itemId, "pickup")) {
-                    event.setCancelled(true);
-                }
-            } catch (Exception ignored) {
-
+            if (!hasPermission(player, itemId, "pickup")) {
+                event.setCancelled(true);
             }
+        } catch (Exception ignored) {
+
         }
     }
 
     @Listener
     public void onBlockPlace(ChangeBlockEvent.Place event) {
-        if (configuration.isBlacklistItemPickup()) {
-            try {
-                Player player = ((Player) event.getCause().all().get(0));
-                String itemId = event.getTransactions().get(0).getDefault().getState().getId();
+        try {
+            Player player = ((Player) event.getCause().all().get(0));
+            String itemId = event.getTransactions().get(0).getDefault().getState().getId();
 
-                if (!hasPermission(player, itemId, "pickup")) {
-                    event.setCancelled(true);
-                }
-            } catch (Exception ignored) {
-
+            if (!hasPermission(player, itemId, "pickup")) {
+                event.setCancelled(true);
             }
+        } catch (Exception ignored) {
+
         }
     }
 
