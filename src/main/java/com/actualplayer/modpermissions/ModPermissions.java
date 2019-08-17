@@ -8,6 +8,7 @@ import ninja.leaping.configurate.loader.ConfigurationLoader;
 import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 import org.slf4j.Logger;
 import org.spongepowered.api.config.DefaultConfig;
+import org.spongepowered.api.data.Transaction;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.Item;
 import org.spongepowered.api.entity.living.player.Player;
@@ -43,7 +44,8 @@ import static java.time.temporal.ChronoUnit.SECONDS;
         url = "https://github.com/ActualPlayer/ModPermissions",
         authors = {
                 "ActualPlayer"
-        }
+        },
+        version = "1.0.0"
 )
 public class ModPermissions {
 
@@ -182,6 +184,39 @@ public class ModPermissions {
             } catch (Exception ignored) {
 
             }
+        }
+    }
+
+    @Listener
+    public void onItemMove(ClickInventoryEvent event) {
+        try {
+            if (!configuration.isAllowItemMove()) {
+                Player player = ((Player) event.getCause().all().get(0));
+                SlotTransaction fromInventory = null;
+                if (event instanceof ClickInventoryEvent.Shift) {
+                    Optional<SlotTransaction> fromTransactionOpt = event.getTransactions().stream().filter(st -> st.getFinal().getType().getId().equals("minecraft:air")).findFirst();
+                    if (fromTransactionOpt.isPresent()) {
+                        fromInventory = fromTransactionOpt.get();
+                    }
+                } else {
+                    fromInventory = event.getTransactions().get(0);
+                }
+
+                if (fromInventory != null) {
+                    if (!(fromInventory.getSlot().transform().parent() instanceof PlayerInventory)) {
+                        for (SlotTransaction transaction : event.getTransactions()) {
+                            String itemId = transaction.getOriginal().getType().getId();
+
+                            if (!hasPermission(player, itemId, "move")) {
+                                event.setCancelled(true);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ignored) {
+
         }
     }
 

@@ -21,6 +21,9 @@ public class Configuration {
     @Setting(value = "allowItemsToDrop", comment = "If allowBreakingOfBlocks is true, this will also drop the item to the ground. The user will not be able to pick up the item if he has the modpermissions.blacklist.{mod id}.pickup permission")
     private boolean allowItemsToDrop = false;
 
+    @Setting(value = "allowItemMove", comment = "Allows the moving of mod items between inventories. This value is ignored if the user attempts to move items from his inventory.")
+    private boolean allowItemMove = true;
+
     public boolean isBlacklistItemPickup() {
         return blacklistItemPickup;
     }
@@ -51,6 +54,14 @@ public class Configuration {
 
     public void setAllowItemsToDrop(boolean allowItemsToDrop) {
         this.allowItemsToDrop = allowItemsToDrop;
+    }
+
+    public boolean isAllowItemMove() {
+        return allowItemMove;
+    }
+
+    public void setAllowItemMove(boolean allowItemMove) {
+        this.allowItemMove = allowItemMove;
     }
 
     public static Configuration generateDefault() {
